@@ -1,19 +1,23 @@
 /**
  * @format
  */
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {AppRegistry} from 'react-native';
-import App from './src/App';
-import {name as appName} from './app.json';
-import * as React from 'react';
-import {View, Text} from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { AppRegistry } from "react-native";
+import App from "./src/App";
+import { name as appName } from "./app.json";
+import * as React from "react";
+import { Provider } from "react-redux";
+import { View, Text } from "react-native";
+import configStore from "./src/store/config_store";
+
+const store = configStore();
 
 const Stack = createNativeStackNavigator();
 
 function HomeScreen() {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Home Screen</Text>
     </View>
   );
@@ -21,7 +25,7 @@ function HomeScreen() {
 
 function DetailsScreen() {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Details Screen</Text>
     </View>
   );
@@ -29,15 +33,20 @@ function DetailsScreen() {
 
 const RootComponent = function () {
   return (
-    <NavigationContainer>
-      {/* <Stack.Navigator initialRouteName="Detail">
+    <Provider store={store}>
+      <NavigationContainer>
+        {/* <Stack.Navigator initialRouteName="Detail">
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Detail" component={DetailsScreen} />
       </Stack.Navigator> */}
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={App} />
-      </Stack.Navigator>
-    </NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Home"
+          screenOptions={{ headerShown: false }}
+        >
+          <Stack.Screen name="Home" component={App} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 };
 
